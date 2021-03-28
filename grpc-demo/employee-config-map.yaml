@@ -7,5 +7,3 @@ data:
   dbName: "MYSQLTEST"
   #host: "172.17.0.5:3306"
   host: "mysql-srv:3306"
-  pmaHost: "172.17.0.5"
-  pmaPort: "3306"
