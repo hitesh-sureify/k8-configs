@@ -37,6 +37,16 @@ spec:
                 configMapKeyRef:
                   name: emp-config
                   key: host
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: password
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: username
 
 ---
 apiVersion: v1

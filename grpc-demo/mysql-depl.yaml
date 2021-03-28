@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-mysql
+  name: mysql-depl
 spec:
   selector:
     matchLabels:
@@ -26,10 +26,10 @@ spec:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: k8s-mysql-storage
+        - name: mysql-storage
           mountPath: /var/lib/mysql
       volumes:
-      - name: k8s-mysql-storage
+      - name: mysql-storage
         emptyDir: {}
 ---
 apiVersion: v1
