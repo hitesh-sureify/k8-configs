@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emp-srv-dpl
+  labels:
+    app: emp-mgmt
+spec:
+  selector:
+    matchLabels:
+      app: emp-mgmt  
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: emp-mgmt
+    spec:
+      containers:
+        - name: emp-mgmt
+          image: golang-grpc
+          imagePullPolicy: Never
+          ports:
+            - name: emp-srv
+              containerPort: 50052
+          env:
+            - name: DB_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: emp-config
+                  key: driver
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: emp-config
+                  key: dbName
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: emp-config
+                  key: host
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emp-srv
+spec:
+  selector:
+    app: emp-mgmt
+  ports:
+    - port: 50052
+      targetPort: emp-srv

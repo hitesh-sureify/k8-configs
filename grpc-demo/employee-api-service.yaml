@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emp-api-depl
+  labels:
+    app: emp-api
+spec:
+  selector:
+    matchLabels:
+      app: emp-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: emp-api
+    spec:
+      containers:
+        - name: emp-api
+          image: employee-api
+          imagePullPolicy: Never
+          ports:
+            - name: emp-api-srv
+              containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emp-api-srv
+spec:
+  selector:
+    app: emp-api
+  ports:
+    - name: http
+      port: 8000
+      nodePort: 30080
+  type: NodePort
